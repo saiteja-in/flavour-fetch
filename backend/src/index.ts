@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-
+import myUserRoute from "./routes/MyUserRoutes"
 dotenv.config();
 
 const app = express();
@@ -14,9 +14,7 @@ mongoose.connect(process.env.MONGODB_URL as string)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-app.get("/test", async (req, res) => {
-  res.json({ message: "Hello world" });
-});
+app.use("/api/my/user",myUserRoute);
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
