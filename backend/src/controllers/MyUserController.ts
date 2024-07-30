@@ -36,7 +36,23 @@ const updateCurrentUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "error updating user" });
   }
 };
+
+const getCurrentUser=async(req: Request, res: Response)=>{
+    try {
+        const currentUser=await User.findOne({_id:req.userId})
+        if(!currentUser){
+            return res.status(404).json({message:"user not found"})
+        }
+        res.json(currentUser);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message:"something went wrong"})
+        
+    }
+}
+
 export default {
   createCurrentUser,
-  updateCurrentUser
+  updateCurrentUser,
+  getCurrentUser
 };
