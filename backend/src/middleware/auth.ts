@@ -23,7 +23,6 @@ export const jwtParse = async (
   res: Response,
   next: NextFunction
 ) => {
-    console.log(req.headers);
     
     const { authorization } = req.headers;
 
@@ -46,7 +45,6 @@ export const jwtParse = async (
     }
     req.auth0Id = auth0Id as string;
     req.userId = user._id.toString();
-    console.log(`req.auth0Id: ${req.auth0Id}, req.userId: ${req.userId}`);
     next();
   } catch (error) {
     return res.sendStatus(401);
