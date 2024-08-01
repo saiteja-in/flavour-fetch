@@ -13,10 +13,10 @@ declare global {
 }
 
 export const jwtCheck = auth({
-    audience: 'food-ordering-app-api',
-    issuerBaseURL: 'https://dev-yh00t0c1y2rm0c3t.us.auth0.com/',
-    tokenSigningAlg: 'RS256'
-  });
+  audience: 'food-ordering-app-api',
+  issuerBaseURL: 'https://dev-yh00t0c1y2rm0c3t.us.auth0.com/',
+  tokenSigningAlg: 'RS256'
+});
 
 export const jwtParse = async (
   req: Request,
@@ -41,10 +41,12 @@ export const jwtParse = async (
     const user = await User.findOne({ auth0Id });
 
     if (!user) {
+      console.log("User not found");
       return res.sendStatus(401);
     }
     req.auth0Id = auth0Id as string;
     req.userId = user._id.toString();
+    console.log(`req.auth0Id: ${req.auth0Id}, req.userId: ${req.userId}`);
     next();
   } catch (error) {
     return res.sendStatus(401);
