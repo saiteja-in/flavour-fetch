@@ -130,5 +130,6 @@ const updateMyRestaurant=async (req:Request,res:Response)=>{
 
 export default {
   createMyRestaurant,
-  getMyRestaurant
+  getMyRestaurant,
+  updateMyRestaurant
 };
