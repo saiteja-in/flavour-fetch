@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import myUserRoute from "./routes/MyUserRoutes";
 import myRestaurantRoute from "./routes/MyRestaurantRoute"
+import restaurantRoute from "./routes/RestaurantRoute"
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ app.get("/health", (req, res) => {
 });
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
+app.use("/api/restaurant",restaurantRoute)
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
