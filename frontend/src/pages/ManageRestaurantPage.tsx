@@ -1,7 +1,6 @@
 import { useCreateMyRestaurant, useGetMyRestaurant, useUpdateMyRestaurant } from '@/api/MyRestaurantApi'
 
 import ManageRestaurantForm from "@/forms/manage-restaurant-form/ManageRestaurantForm";
-import React from 'react'
 
 const ManageRestaurantPage = () => {
   const {createRestaurant,isLoading:isCreateLoading}=useCreateMyRestaurant()
