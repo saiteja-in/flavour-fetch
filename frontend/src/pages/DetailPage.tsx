@@ -1,13 +1,53 @@
 import { useGetRestaurant } from "@/api/RestaurantApi";
 import MenuItems from "@/components/MenuItem";
+import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { Card } from "@/components/ui/card";
+import { MenuItem } from "@/types";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+
+export type CartItem = {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+};
 
 const DetailPage = () => {
   const { restaurantId } = useParams();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const addToCart = (menuItem: MenuItem) => {
+    setCartItems((prevCartItems) => {
+      //check if item is already in cart
+      const existingCartItem = prevCartItems.find(
+        (cartItem) => cartItem._id === menuItem._id
+      );
+      let updatedCartItems;
+      //if item is in the cart,update the quantity
+      if (existingCartItem) {
+        updatedCartItems = prevCartItems.map((cartItem) =>
+          cartItem._id === menuItem._id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        );
+      } else {
+        updatedCartItems = [
+          ...prevCartItems,
+          {
+            _id: menuItem._id,
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity: 1,
+          },
+        ];
+      }
+      return updatedCartItems;
+    });
+  };
+
   const { restaurant, isLoading } = useGetRestaurant(restaurantId);
   if (isLoading || !restaurant) {
     return "Loading......";
@@ -23,10 +63,18 @@ const DetailPage = () => {
       <div className="grid md:grid-cols-[4fr_2fr] gap-5 md:px-32">
         <div className="flex flex-col gap-4">
           <RestaurantInfo restaurant={restaurant} />
-        <span className="text-2xl font-bold tracking-tight" >Menu</span>
-        {restaurant.menuItems.map((menuItem)=>(
-            <MenuItems menuItem={menuItem}/>
-        ))}
+          <span className="text-2xl font-bold tracking-tight">Menu</span>
+          {restaurant.menuItems.map((menuItem) => (
+            <MenuItems
+              menuItem={menuItem}
+              addToCart={() => addToCart(menuItem)}
+            />
+          ))}
+        </div>
+        <div>
+          <Card>
+            <OrderSummary restaurant={restaurant} cartItems={cartItems} />
+          </Card>
         </div>
       </div>
     </div>
