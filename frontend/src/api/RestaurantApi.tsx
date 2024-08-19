@@ -60,4 +60,4 @@ export const useSearchRestaurants = (
     results,
     isLoading,
   };
-};
+}; 
