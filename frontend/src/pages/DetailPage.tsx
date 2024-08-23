@@ -1,13 +1,15 @@
+import { useCreateMyRestaurant } from "@/api/MyRestaurantApi";
 import { useGetRestaurant } from "@/api/RestaurantApi";
 import CheckoutButton from "@/components/CheckoutButton";
 import MenuItems from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { Card, CardFooter } from "@/components/ui/card";
+import { UserFormData } from "@/forms/user-profile-form/UserProfileForm";
 import { MenuItem } from "@/types";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export type CartItem = {
   _id: string;
@@ -18,6 +20,7 @@ export type CartItem = {
 
 const DetailPage = () => {
   const { restaurantId } = useParams();
+  const navigate=useNavigate()
   const [cartItems, setCartItems] = useState<CartItem[]>(()=>{
     const storedCartItems=sessionStorage.getItem(`cartItems-${restaurantId}`);
     return storedCartItems ? JSON.parse(storedCartItems): [];
@@ -64,6 +67,10 @@ const DetailPage = () => {
   }
 
   const { restaurant, isLoading } = useGetRestaurant(restaurantId);
+  const onCheckout=(userFormData:UserFormData)=>{
+    console.log("userFormData",userFormData)
+    navigate("/payment")
+  }
   if (isLoading || !restaurant) {
     return "Loading......";
   }
@@ -90,7 +97,7 @@ const DetailPage = () => {
           <Card>
             <OrderSummary restaurant={restaurant} removeFromCart={removeFromCart} cartItems={cartItems} />
             <CardFooter>
-            <CheckoutButton  />
+            <CheckoutButton disabled={cartItems.length===0} onCheckout={onCheckout} />
           </CardFooter>
           </Card>
           

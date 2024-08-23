@@ -7,6 +7,7 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import ManageRestaurantPage from "./pages/ManageRestaurantPage";
 import SearchPage from "./pages/SearchPage";
 import DetailPage from "./pages/DetailPage";
+import Payment from "./pages/Payment";
 
 const AppRoutes = () => {
   return (
@@ -54,6 +55,7 @@ const AppRoutes = () => {
           }
         />
       </Route>
+      <Route path="/payment" element={<Payment />}/>
 
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
