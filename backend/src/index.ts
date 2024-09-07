@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { v2 as cloudinary } from 'cloudinary'
 import cors from "cors";
 import dotenv from "dotenv";
@@ -17,15 +17,14 @@ mongoose
   .connect(process.env.MONGODB_URL as string)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
-
 cloudinary.config({
-  cloud_name:"dvl1fcwo2",
-  api_key:"977914559279777",
-  api_secret:"lI0WEcvW-IkB3teWRBEQR5B72t8"
+  cloud_name:process.env.CLOUDINAY_CLOUD_NAME,
+  api_key:process.env.CLOUDINAY_API_KEY,
+  api_secret:process.env.CLOUDINAY_API_SECRET
 })
 
-app.get("/health", (req, res) => {
-  res.json({ message: "healthy bitch" });
+app.get("/health", async(req:Request, res:Response) => {
+  res.json({ message: "healthy" });
 });
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
