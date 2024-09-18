@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import path from "path"
 import { v2 as cloudinary } from 'cloudinary'
 import cors from "cors";
 import dotenv from "dotenv";
@@ -29,6 +30,21 @@ app.get("/health", async(req:Request, res:Response) => {
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
 app.use("/api/restaurant",restaurantRoute)
+
+const frontendPath = path.join(__dirname, "../../frontend/dist"); // Adjust the path to point to the frontend folder
+
+app.use(express.static(frontendPath));
+
+// Fallback to send index.html for any non-API routes
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(frontendPath, "index.html"));
+});
+
+
+// app.use(express.static(path.join(__dirname,"/frontend/dist")))
+// app.use("*",(req,res)=>{
+//   res.sendFile(path.join(__dirname,'frontend','dist','index.html'))
+// })
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
