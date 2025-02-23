@@ -1,0 +1,4 @@
+Auth0 setup
+go to auth0 site
+1 create an application
+  
