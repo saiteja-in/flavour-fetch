@@ -1,4 +1,4 @@
-import { useCreateMyRestaurant } from "@/api/MyRestaurantApi";
+// import { useCreateMyRestaurant } from "@/api/MyRestaurantApi";
 import { useGetRestaurant } from "@/api/RestaurantApi";
 import CheckoutButton from "@/components/CheckoutButton";
 import MenuItems from "@/components/MenuItem";
@@ -8,7 +8,7 @@ import { Card, CardFooter } from "@/components/ui/card";
 import { UserFormData } from "@/forms/user-profile-form/UserProfileForm";
 import { MenuItem } from "@/types";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export type CartItem = {
