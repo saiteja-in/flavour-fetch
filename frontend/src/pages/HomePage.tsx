@@ -17,7 +17,26 @@ const HomePage = () => {
                 Tuck into a takeaway today
             </h1>
             <span className='text-xl'>Food is just a click away</span>
-            <SearchBar placeHolder="Search by city or town" onSubmit={handleSearchSubmit} />
+            <div className='flex flex-col gap-3'>
+                <div className='flex flex-col gap-2'>
+                    <span className='text-sm text-gray-600'>Try these:</span>
+                    <div className='flex gap-2 justify-center'>
+                        <button 
+                            onClick={() => handleSearchSubmit({ searchQuery: 'London' })}
+                            className='px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium hover:bg-orange-200 transition-colors'
+                        >
+                            London
+                        </button>
+                        <button 
+                            onClick={() => handleSearchSubmit({ searchQuery: 'Los Angeles' })}
+                            className='px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium hover:bg-orange-200 transition-colors'
+                        >
+                            Los Angeles
+                        </button>
+                    </div>
+                </div>
+                <SearchBar placeHolder="Search by city or town" onSubmit={handleSearchSubmit} />
+            </div>
         </div>
         <div className='grid md:grid-cols-2 gap-5'>
             <img src={landingImage} />
